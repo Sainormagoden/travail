@@ -7,6 +7,10 @@ Author: François Darrigade
 License: unflux
 */
 
+
+/*
+ * Initializing the plugin
+ */
 class Database_Synchro{
 
     public function __construct(){
@@ -19,5 +23,15 @@ class Database_Synchro{
         new Database_Synchro_Widget();
     }
 }
-
 new Database_Synchro();
+
+/*
+ * function Ajax to PHP
+ */
+add_action('wp_ajax_updateDate', 'dbUpdateDateSync');
+function dbUpdateDateSync()
+{
+    Database_Synchro_Data::changeLastSync();
+    echo Database_Synchro_Data::selectLastSync();
+    die();
+}
