@@ -38,7 +38,13 @@ class Database_Synchro_Widget extends WP_Widget{
                                 if (test.message == "SyncEnd"){
                                     lastSyncAjax("<?= admin_url('admin-ajax.php'); ?>");
                                 }
+                                else{
+                                    $("#database_synchro_status").text("Erreur synchronisation!");
+                                }
                             })
+                        }
+                        else{
+                            $("#database_synchro_status").text("Erreur lors du lancement de la synchronisation!");
                         }
                     });
                 });

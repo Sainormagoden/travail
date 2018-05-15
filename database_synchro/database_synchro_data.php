@@ -51,7 +51,7 @@ class Database_Synchro_Data
     }
 
     /*
-     *
+     * Change the date of last synchronization
      */
     public static function changeLastSync(){
         global $wpdb;
@@ -59,11 +59,23 @@ class Database_Synchro_Data
     }
 
     /*
-     *
+     * Select the date of last synchronization
      */
     public static function selectLastSync(){
         global $wpdb;
         $dateSync = date_create($wpdb->get_var("SELECT info_value FROM {$wpdb->prefix}cga_sync_info WHERE info_name = 'last_sync'"));
         return date_format($dateSync, "d/m/Y à H:i:s");
     }
+}
+
+
+/*
+ * function Ajax to PHP
+ */
+add_action('wp_ajax_updateDate', 'dbUpdateDateSync');
+function dbUpdateDateSync()
+{
+    Database_Synchro_Data::changeLastSync();
+    echo Database_Synchro_Data::selectLastSync();
+    die();
 }
