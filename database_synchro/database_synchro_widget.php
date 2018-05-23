@@ -32,10 +32,10 @@ class Database_Synchro_Widget extends WP_Widget{
                 $("#synchronisation").click( function (){
                     startSyncAjax(function(msg){
                         test = msg;
-                        if (test.message == "SyncStart"){
+                        if (test.message == "syncstart"){
                             syncAjax(function(msg){
                                 test = msg;
-                                if (test.message == "SyncEnd"){
+                                if (test.message == "syncend"){
                                     lastSyncAjax("<?= admin_url('admin-ajax.php'); ?>");
                                 }
                                 else{
@@ -50,14 +50,15 @@ class Database_Synchro_Widget extends WP_Widget{
                 });
             });
         </script>
+        <?php $lastSync = Database_Synchro_Data::selectAllSync(); echo(exec("whoami"));?>
         <p>
             <label>Date de dernière synchro : </label>
-            <label id="database_synchro_date"><?= $lastSync = Database_Synchro_Data::selectLastSync(); ?></label>
+            <label id="database_synchro_date"><?=$lastSync[2]?></label>
             <form action="" method="post">
                 <label for="database_synchro_api">API ID:</label>
-                <input id="database_synchro_api" name="database_synchro_api" type="text"/>
+                <input id="database_synchro_api" name="database_synchro_api" type="text" value="<?=$lastSync[1]?>"/>
                 <label for="database_synchro_apiurl">API URL :</label>
-                <input id="database_synchro_apiurl" name="database_synchro_apiurl" type="url"/>
+                <input id="database_synchro_apiurl" name="database_synchro_apiurl" type="url" value="<?=$lastSync[0]?>"/>
                 <input type="submit" value="Changer API"/>
             </form>
             <label>Actions :</label>

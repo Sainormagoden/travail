@@ -2,7 +2,7 @@
 /*
 Plugin Name: database_synchro
 Description: synchronisation de base de donnée
-Version: 0.1
+Version: 0.5
 Author: François Darrigade
 License: unflux
 */

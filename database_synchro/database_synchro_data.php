@@ -59,12 +59,15 @@ class Database_Synchro_Data
     }
 
     /*
-     * Select the date of last synchronization
+     * Select the date of last synchronization and datas of api
      */
-    public static function selectLastSync(){
+    public static function selectAllSync(){
         global $wpdb;
+        $url = $wpdb->get_var("SELECT info_value FROM {$wpdb->prefix}cga_sync_info WHERE info_name = 'api_url'");
+        $key = $wpdb->get_var("SELECT info_value FROM {$wpdb->prefix}cga_sync_info WHERE info_name = 'api_key'");
         $dateSync = date_create($wpdb->get_var("SELECT info_value FROM {$wpdb->prefix}cga_sync_info WHERE info_name = 'last_sync'"));
-        return date_format($dateSync, "d/m/Y à H:i:s");
+        $date = date_format($dateSync, "d/m/Y à H:i:s");
+        return array($url, $key, $date);
     }
 }
 
@@ -76,6 +79,6 @@ add_action('wp_ajax_updateDate', 'dbUpdateDateSync');
 function dbUpdateDateSync()
 {
     Database_Synchro_Data::changeLastSync();
-    echo Database_Synchro_Data::selectLastSync();
+    echo Database_Synchro_Data::selectAllSync()[2];
     die();
 }
