@@ -50,7 +50,7 @@ class Database_Synchro_Widget extends WP_Widget{
                 });
             });
         </script>
-        <?php $lastSync = Database_Synchro_Data::selectAllSync(); echo(exec("whoami"));?>
+        <?php $lastSync = Database_Synchro_Data::selectAllSync();?>
         <p>
             <label>Date de dernière synchro : </label>
             <label id="database_synchro_date"><?=$lastSync[2]?></label>
