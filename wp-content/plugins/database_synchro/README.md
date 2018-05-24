@@ -1,5 +1,5 @@
 <p align="center"><a href="https://www.unflux.fr" target="_blank">
-    <img src="https://www.unflux.fr/img/unflux-logo.svg" style="max-width:150px;">
+    <img src="https://www.unflux.fr/img/unflux-logo.svg" width="150">
 </a></p>
 
 CGA CLIENT API by unflux
