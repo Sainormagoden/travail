@@ -1,0 +1,12 @@
+.col-md-4{
+    padding-bottom:5px; 
+}
+
+#wpfooter{
+    margin-left: 0;
+    padding: 0;
+}
+
+#wpfooter p{
+    float: none;
+}

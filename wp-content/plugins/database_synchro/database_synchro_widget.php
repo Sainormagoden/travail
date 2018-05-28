@@ -34,6 +34,8 @@ class DatabaseSynchroWidget extends WP_Widget{
             DatabaseSynchroData::changeApiSuffixe($_POST['database_synchro_apisuffixe']);
         }
         ?>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="<?= plugins_url('database_synchro'); ?>/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="<?= plugins_url('database_synchro'); ?>/function.js"></script>
         <script>
@@ -45,10 +47,10 @@ class DatabaseSynchroWidget extends WP_Widget{
                 $("#synchronisation").click( function (){
                     $("#database_synchro_status").text("Synchronisation en cours...");
                     syncAjax(function(msg){
-                        test = msg;
-                        if (test.message == "syncend"){
+                        if (msg.message == "syncend"){
                             $("#database_synchro_message").find(".dsm").html("");
                             $("#database_synchro_message").hide();
+                            $("#database_synchro_nbAppel").text(msg.necalls);
                             lastSyncAjax("<?= admin_url('admin-ajax.php'); ?>");
                         }
                         else{
@@ -61,31 +63,43 @@ class DatabaseSynchroWidget extends WP_Widget{
             });
         </script>
         <?php $dataSync = DatabaseSynchroData::selectAllSync();?>
-        <p>
-            <label>Date de dernière synchro : </label>
-            <label id="database_synchro_date"><?=$dataSync[0]?></label>
-            <form action="" method="post">
-                <label for="database_synchro_api">API ID:</label>
-                <input id="database_synchro_api" name="database_synchro_api" type="text" value="<?=$dataSync[1]?>"/>
-                <br>
-                <label for="database_synchro_apiurl">API URL :</label>
-                <input id="database_synchro_apiurl" name="database_synchro_apiurl" type="url" value="<?=$dataSync[2]?>"/>
-                <br>
-                <label for="database_synchro_apisuffixe">API Suffixe :</label>
-                <input id="database_synchro_apisuffixe" name="database_synchro_apisuffixe" type="text" value="<?=$dataSync[3]?>"/>
-                <br>
-                <input type="submit" value="Changer API"/>
-            </form>
-            <label>Actions :</label>
-            <input type="button" value="Synchronisation" id="synchronisation"/>
-            <label>Status : </label>
-            <label id="database_synchro_status"> Synchronisation pas commencée. </label>
-            <br/>
-            <div id="database_synchro_message" style="display:none">
-            <label>Message d'erreur :</label>
-            <label class="dsm"> </label>
+        <div class="row"><div class="col-md-12"><h2>CGA API</h2><div></div>
+        <div class="row">
+            <div class="col-md-2"><label>Date de dernière synchro : </label></div>
+            <div class="col-md-4"><label id="database_synchro_date"><?=$dataSync[0]?></div>
+        </div>
+        <form action="" method="post"> 
+            <div class="row">
+                <div class="col-md-2"><label for="database_synchro_api">API ID:</label></div>
+                <div class="col-md-4"><input class="form-control" id="database_synchro_api" name="database_synchro_api" type="text" value="<?=$dataSync[1]?>"/></div>
             </div>
-        </p>
+            <div class="row">
+                <div class="col-md-2"><label for="database_synchro_apiurl">API URL :</label></div>
+                <div class="col-md-4"><input class="form-control" id="database_synchro_apiurl" name="database_synchro_apiurl" type="url" value="<?=$dataSync[2]?>"/></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label for="database_synchro_apisuffixe">API Suffixe :</label></div>
+                <div class="col-md-4"><input class="form-control" id="database_synchro_apisuffixe" name="database_synchro_apisuffixe" type="text" value="<?=$dataSync[3]?>"/></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"><label>Actions :</label></div>
+                <div class="col-md-1"><input type="submit" value="Changer API" class="btn btn-dark"/></div>
+                <div class="col-md-1"><input type="button" value="Synchronisation" id="synchronisation" class="btn btn-dark"/></div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-md-2"><label>Status : </label></div>
+            <div class="col-md-4"><label id="database_synchro_status"> Synchronisation pas commencée. </label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><label>Nombre d'appel : </label></div>
+            <div class="col-md-4"><label id="database_synchro_nbAppel"> 0 </label></div>
+        </div>
+        <div class="row" id="database_synchro_message" style="display:none">
+            <div class="col-md-2"><label>Message d'erreur :</label></div>
+            <div class="col-md-4"><label class="dsm"> </label></div>
+        </div>
+
         <?php
     }
 }
